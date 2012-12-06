@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: modules.php 21475 2011-06-07 22:49:07Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	Templates.bluestork
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 

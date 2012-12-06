@@ -1,15 +1,15 @@
 <?php
 /**
- * @version		$Id: default_login.php 22060 2011-09-12 14:14:55Z infograf768 $
  * @package		Joomla.Site
  * @subpackage	com_users
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  * @since		1.5
  */
 
 defined('_JEXEC') or die;
 JHtml::_('behavior.keepalive');
+JHtml::_('behavior.noframes');
 ?>
 <div class="login<?php echo $this->pageclass_sfx?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
@@ -43,8 +43,14 @@ JHtml::_('behavior.keepalive');
 					<?php echo $field->input; ?></div>
 				<?php endif; ?>
 			<?php endforeach; ?>
+			<?php if (JPluginHelper::isEnabled('system', 'remember')) : ?>
+			<div class="login-fields">
+				<label id="remember-lbl" for="remember"><?php echo JText::_('JGLOBAL_REMEMBER_ME') ?></label>
+				<input id="remember" type="checkbox" name="remember" class="inputbox" value="yes"  alt="<?php echo JText::_('JGLOBAL_REMEMBER_ME') ?>" />
+			</div>
+			<?php endif; ?>
 			<button type="submit" class="button"><?php echo JText::_('JLOGIN'); ?></button>
-			<input type="hidden" name="return" value="<?php echo base64_encode($this->params->get('login_redirect_url',$this->form->getValue('return'))); ?>" />
+			<input type="hidden" name="return" value="<?php echo base64_encode($this->params->get('login_redirect_url', $this->form->getValue('return'))); ?>" />
 			<?php echo JHtml::_('form.token'); ?>
 		</fieldset>
 	</form>

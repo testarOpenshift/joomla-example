@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: route.php 21955 2011-08-12 21:36:59Z dextercowley $
  * @package		Joomla.Site
  * @subpackage	com_weblinks
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -51,7 +50,7 @@ abstract class WeblinksHelperRoute
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
 		}
-		else if ($item = self::_findItem()) {
+		elseif ($item = self::_findItem()) {
 			$link .= '&Itemid='.$item;
 		}
 
@@ -115,7 +114,7 @@ abstract class WeblinksHelperRoute
 					if ($item = self::_findItem($needles)) {
 						$link .= '&Itemid='.$item;
 					}
-					else if ($item = self::_findItem()) {
+					elseif ($item = self::_findItem()) {
 						$link .= '&Itemid='.$item;
 					}
 				}
@@ -136,17 +135,17 @@ abstract class WeblinksHelperRoute
 
 			$component	= JComponentHelper::getComponent('com_weblinks');
 			$items		= $menus->getItems('component_id', $component->id);
-			
+
 			if ($items) {
 				foreach ($items as $item)
 				{
 					if (isset($item->query) && isset($item->query['view'])) {
 						$view = $item->query['view'];
-	
+
 						if (!isset(self::$lookup[$view])) {
 							self::$lookup[$view] = array();
 						}
-	
+
 						if (isset($item->query['id'])) {
 							self::$lookup[$view][$item->query['id']] = $item->id;
 						}

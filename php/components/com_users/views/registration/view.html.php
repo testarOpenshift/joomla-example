@@ -1,15 +1,12 @@
 <?php
 /**
- * @version		$Id: view.html.php 21367 2011-05-18 12:29:19Z chdemko $
  * @package		Joomla.Site
  * @subpackage	com_users
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * Registration view class for Users.
@@ -18,7 +15,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_users
  * @since		1.6
  */
-class UsersViewRegistration extends JView
+class UsersViewRegistration extends JViewLegacy
 {
 	protected $data;
 	protected $form;

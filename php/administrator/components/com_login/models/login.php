@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: login.php 22066 2011-09-13 09:03:39Z infograf768 $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License, see LICENSE.php
  */
 
-// No direct access.
 defined('_JEXEC') or die;
-
-jimport( 'joomla.application.component.model' );
 
 /**
  * Login Model
@@ -17,7 +13,7 @@ jimport( 'joomla.application.component.model' );
  * @subpackage	com_login
  * @since		1.5
  */
-class LoginModelLogin extends JModel
+class LoginModelLogin extends JModelLegacy
 {
 	/**
 	 * Method to auto-populate the model state.
@@ -49,7 +45,7 @@ class LoginModelLogin extends JModel
 
 		$this->setState('return', $return);
 	}
-	
+
 	/**
 	 * Get the administrator login module by name (real, eg 'login' or folder, eg 'mod_login')
 	 *
@@ -57,26 +53,21 @@ class LoginModelLogin extends JModel
 	 * @param   string  $title  The title of the module, optional
 	 *
 	 * @return  object  The Module object
-	 * 
+	 *
 	 * @since   11.1
 	 */
-	public static function &getLoginModule($name = 'login', $title = null)
+	public static function getLoginModule($name = 'mod_login', $title = null)
 	{
 		$result		= null;
-		$modules	= LoginModelLogin::_load();
+		$modules	= LoginModelLogin::_load($name);
 		$total		= count($modules);
-		
+
 		for ($i = 0; $i < $total; $i++)
 		{
-			// Match the name of the module
-			// Even though this is normally 'login' it is possible someone will use a differnt name or module
-			if ($modules[$i]->name == $name)
-			{
-				// Match the title if we're looking for a specific instance of the module
-				if (!$title || $modules[$i]->title == $title) {
-					$result = &$modules[$i];
-					break;	// Found it
-				}
+			// Match the title if we're looking for a specific instance of the module
+			if (!$title || $modules[$i]->title == $title) {
+				$result = $modules[$i];
+				break;	// Found it
 			}
 		}
 
@@ -98,18 +89,20 @@ class LoginModelLogin extends JModel
 	}
 	/**
 	 * Load login modules.
-	 * 
+	 *
 	 * Note that we load regardless of state or access level since access
 	 * for public is the only thing that makes sense since users are not logged in
 	 * and the module lets them log in.
 	 * This is put in as a failsafe to avoid super user lock out caused by an unpublished
 	 * login module or by a module set to have a viewing access level that is not Public.
 	 *
+	 * @param   string  $name   The name of the module
+	 *
 	 * @return  array
-	 * 
+	 *
 	 * @since   11.1
 	 */
-	protected static function &_load()
+	protected static function _load($module)
 	{
 		static $clean;
 
@@ -123,6 +116,7 @@ class LoginModelLogin extends JModel
 
 		$cache 		= JFactory::getCache ('com_modules', '');
 		$cacheid 	= md5(serialize(array( $clientId, $lang)));
+		$loginmodule = array();
 
 		if (!($clean = $cache->get($cacheid))) {
 			$db	= JFactory::getDbo();
@@ -130,9 +124,9 @@ class LoginModelLogin extends JModel
 			$query = $db->getQuery(true);
 			$query->select('m.id, m.title, m.module, m.position, m.showtitle, m.params');
 			$query->from('#__modules AS m');
-			$query->where('m.module =' . $db->Quote('mod_login') .' AND m.client_id = 1');
+			$query->where('m.module =' . $db->Quote($module) .' AND m.client_id = 1');
 
-			$query->join('LEFT','#__extensions AS e ON e.element = m.module AND e.client_id = m.client_id');
+			$query->join('LEFT', '#__extensions AS e ON e.element = m.module AND e.client_id = m.client_id');
 			$query->where('e.enabled = 1');
 
 			// Filter by language
@@ -145,16 +139,15 @@ class LoginModelLogin extends JModel
 			// Set the query
 			$db->setQuery($query);
 			$modules = $db->loadObjectList();
-			$loginmodule	= array();
 
 			if ($db->getErrorNum()){
 				JError::raiseWarning(500, JText::sprintf('JLIB_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
 				return $loginmodule;
 			}
 
-			
+
 			// Return to simple indexing that matches the query order.
-			$loginmodule = array_values($loginmodule);
+			$loginmodule = $modules;
 
 			$cache->store($loginmodule, $cacheid);
 		}

@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: view.html.php 21705 2011-06-28 21:19:50Z dextercowley $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * Categories view class for the Category package.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_categories
  * @since		1.6
  */
-class CategoriesViewCategories extends JView
+class CategoriesViewCategories extends JViewLegacy
 {
 	protected $items;
 	protected $pagination;
@@ -56,7 +52,7 @@ class CategoriesViewCategories extends JView
 		$options[]	= JHtml::_('select.option', '9', JText::_('J9'));
 		$options[]	= JHtml::_('select.option', '10', JText::_('J10'));
 
-		$this->assign('f_levels', $options);
+		$this->f_levels = $options;
 
 		$this->addToolbar();
 		parent::display($tpl);
@@ -74,6 +70,7 @@ class CategoriesViewCategories extends JView
 		$component	= $this->state->get('filter.component');
 		$section	= $this->state->get('filter.section');
 		$canDo		= null;
+		$user		= JFactory::getUser();
 
 		// Avoid nonsense situation.
 		if ($component == 'com_categories') {
@@ -107,12 +104,12 @@ class CategoriesViewCategories extends JView
 		}
 
 		// Load specific css component
-		JHtml::_('stylesheet',$component.'/administrator/categories.css', array(), true);
+		JHtml::_('stylesheet', $component.'/administrator/categories.css', array(), true);
 
 		// Prepare the toolbar.
-		JToolBarHelper::title($title, 'categories '.substr($component,4).($section?"-$section":'').'-categories');
+		JToolBarHelper::title($title, 'categories '.substr($component, 4).($section?"-$section":'').'-categories');
 
-		if ($canDo->get('core.create')) {
+		if ($canDo->get('core.create') || (count($user->getAuthorisedCategories($component, 'core.create'))) > 0 ) {
 			 JToolBarHelper::addNew('category.add');
 		}
 
@@ -135,7 +132,7 @@ class CategoriesViewCategories extends JView
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete', $component)) {
 			JToolBarHelper::deleteList('', 'categories.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
-		else if ($canDo->get('core.edit.state')) {
+		elseif ($canDo->get('core.edit.state')) {
 			JToolBarHelper::trash('categories.trash');
 			JToolBarHelper::divider();
 		}
@@ -148,7 +145,7 @@ class CategoriesViewCategories extends JView
 
 		// Compute the ref_key if it does exist in the component
 		if (!$lang->hasKey($ref_key = strtoupper($component.($section?"_$section":'')).'_CATEGORIES_HELP_KEY')) {
-			$ref_key = 'JHELP_COMPONENTS_'.strtoupper(substr($component,4).($section?"_$section":'')).'_CATEGORIES';
+			$ref_key = 'JHELP_COMPONENTS_'.strtoupper(substr($component, 4).($section?"_$section":'')).'_CATEGORIES';
 		}
 
 		// Get help for the categories view for the component by

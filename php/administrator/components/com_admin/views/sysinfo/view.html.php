@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: view.html.php 22030 2011-09-02 12:41:22Z chdemko $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * Sysinfo View class for the Admin component
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_admin
  * @since		1.6
  */
-class AdminViewSysinfo extends JView
+class AdminViewSysinfo extends JViewLegacy
 {
 	/**
 	 * @var array some php settings

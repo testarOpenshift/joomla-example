@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: view.html.php 21908 2011-07-20 16:27:58Z infograf768 $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * View class for a list of clients.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_banners
  * @since		1.6
  */
-class BannersViewClients extends JView
+class BannersViewClients extends JViewLegacy
 {
 	protected $items;
 	protected $pagination;
@@ -72,10 +68,10 @@ class BannersViewClients extends JView
 		if ($this->state->get('filter.state') == -2 && $canDo->get('core.delete')) {
 			JToolBarHelper::deleteList('', 'clients.delete', 'JTOOLBAR_EMPTY_TRASH');
 			JToolBarHelper::divider();
-		} else if ($canDo->get('core.edit.state')) {
+		} elseif ($canDo->get('core.edit.state')) {
 			JToolBarHelper::trash('clients.trash');
 			JToolBarHelper::divider();
-		}	
+		}
 
 		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_banners');
