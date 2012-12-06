@@ -1,13 +1,11 @@
 <?php
 /**
- * @version		$Id: category.php 21822 2011-07-12 10:40:17Z infograf768 $
  * @package		Joomla.Site
  * @subpackage	com_content
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
@@ -81,6 +79,7 @@ class ContentModelCategory extends JModelList
 				'access', 'a.access', 'access_level',
 				'created', 'a.created',
 				'created_by', 'a.created_by',
+				'modified', 'a.modified',
 				'ordering', 'a.ordering',
 				'featured', 'a.featured',
 				'language', 'a.language',
@@ -133,10 +132,13 @@ class ContentModelCategory extends JModelList
 			$this->setState('filter.published', 1);
 			// Filter by start and end dates.
 			$nullDate = $db->Quote($db->getNullDate());
-			$nowDate = $db->Quote(JFactory::getDate()->toMySQL());
+			$nowDate = $db->Quote(JFactory::getDate()->toSQL());
 
 			$query->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ')');
 			$query->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
+		}
+		else {
+			$this->setState('filter.published', array(0, 1, 2));
 		}
 
 		// process show_noauth parameter
@@ -165,7 +167,7 @@ class ContentModelCategory extends JModelList
 		}
 		$this->setState('list.direction', $listOrder);
 
-		$this->setState('list.start', JRequest::getVar('limitstart', 0, '', 'int'));
+		$this->setState('list.start', JRequest::getUInt('limitstart', 0));
 
 		// set limit for query. If list, use parameter. If blog, add blog parameters for limit.
 		if ((JRequest::getCmd('layout') == 'blog') || $params->get('layout_type') == 'blog') {
@@ -173,7 +175,7 @@ class ContentModelCategory extends JModelList
 			$this->setState('list.links', $params->get('num_links'));
 		}
 		else {
-			$limit = $app->getUserStateFromRequest('com_content.category.list.' . $itemid . '.limit', 'limit', $params->get('display_num'));
+			$limit = $app->getUserStateFromRequest('com_content.category.list.' . $itemid . '.limit', 'limit', $params->get('display_num'), 'uint');
 		}
 
 		$this->setState('list.limit', $limit);
@@ -188,7 +190,7 @@ class ContentModelCategory extends JModelList
 
 
 
-		$this->setState('filter.language',$app->getLanguageFilter());
+		$this->setState('filter.language', $app->getLanguageFilter());
 
 		$this->setState('layout', JRequest::getCmd('layout'));
 
@@ -206,7 +208,7 @@ class ContentModelCategory extends JModelList
 		$limit = $this->getState('list.limit');
 
 		if ($this->_articles === null && $category = $this->getCategory()) {
-			$model = JModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
+			$model = JModelLegacy::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
 			$model->setState('params', JFactory::getApplication()->getParams());
 			$model->setState('filter.category_id', $category->id);
 			$model->setState('filter.published', $this->getState('filter.published'));
@@ -264,7 +266,7 @@ class ContentModelCategory extends JModelList
 		}
 
 		if ($orderCol && $orderDirn) {
-			$orderby .= $db->getEscaped($orderCol) . ' ' . $db->getEscaped($orderDirn) . ', ';
+			$orderby .= $db->escape($orderCol) . ' ' . $db->escape($orderDirn) . ', ';
 		}
 
 		$articleOrderby		= $params->get('orderby_sec', 'rdate');
@@ -273,7 +275,7 @@ class ContentModelCategory extends JModelList
 		$secondary			= ContentHelperQuery::orderbySecondary($articleOrderby, $articleOrderDate) . ', ';
 		$primary			= ContentHelperQuery::orderbyPrimary($categoryOrderby);
 
-		$orderby .= $db->getEscaped($primary) . ' ' . $db->getEscaped($secondary) . ' a.created ';
+		$orderby .= $db->escape($primary) . ' ' . $db->escape($secondary) . ' a.created ';
 
 		return $orderby;
 	}
@@ -409,7 +411,7 @@ class ContentModelCategory extends JModelList
 				JArrayHelper::sortObjects($this->_children, 'title', ($params->get('orderby_pri') == 'alpha') ? 1 : -1);
 			}
 		}
-		
+
 		return $this->_children;
 	}
 }

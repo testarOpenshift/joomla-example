@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: default.php 21529 2011-06-11 22:17:15Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	Templates.hathor
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  * @since		1.6
  */
@@ -19,10 +18,6 @@ $clientId	= $this->state->get('filter.client_id', 0);
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_languages&view=installed&client='.$clientId); ?>" method="post" id="adminForm" name="adminForm">
 
-	<?php if ($this->ftp): ?>
-		<?php echo $this->loadTemplate('ftp');?>
-	<?php endif; ?>
-
 	<table class="adminlist">
 		<thead>
 			<tr>
@@ -34,6 +29,9 @@ $clientId	= $this->state->get('filter.client_id', 0);
 				</th>
 				<th class="title">
 					<?php echo JText::_('COM_LANGUAGES_HEADING_LANGUAGE'); ?>
+				</th>
+				<th>
+					<?php echo JText::_('COM_LANGUAGES_FIELD_LANG_TAG_LABEL'); ?>
 				</th>
 				<th class="width-10">
 					<?php echo JText::_('JCLIENT'); ?>
@@ -67,10 +65,13 @@ $clientId	= $this->state->get('filter.client_id', 0);
 					<?php echo $this->pagination->getRowOffset($i); ?>
 				</th>
 				<td>
-					<?php echo JHtml::_('languages.id',$i,$row->language);?>
+					<?php echo JHtml::_('languages.id', $i, $row->language);?>
 				</td>
 				<td>
 					<?php echo $this->escape($row->name); ?>
+				</td>
+				<td align="center">
+					<?php echo $this->escape($row->language); ?>
 				</td>
 				<td class="center">
 					<?php echo $client;?>

@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: view.html.php 21705 2011-06-28 21:19:50Z dextercowley $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access.
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * View class for a list of newsfeeds.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_newsfeeds
  * @since		1.6
  */
-class NewsfeedsViewNewsfeeds extends JView
+class NewsfeedsViewNewsfeeds extends JViewLegacy
 {
 	protected $items;
 	protected $pagination;
@@ -72,7 +68,7 @@ class NewsfeedsViewNewsfeeds extends JView
 		if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
 			JToolBarHelper::deleteList('', 'newsfeeds.delete', 'JTOOLBAR_EMPTY_TRASH');
 			JToolBarHelper::divider();
-		} else if ($canDo->get('core.edit.state')) {
+		} elseif ($canDo->get('core.edit.state')) {
 			JToolBarHelper::trash('newsfeeds.trash');
 			JToolBarHelper::divider();
 		}

@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: categories.php 21593 2011-06-21 02:45:51Z dextercowley $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.model');
 
 /**
  * This models supports retrieving lists of article categories.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.model');
  * @subpackage	com_content
  * @since		1.6
  */
-class ContentModelCategories extends JModel
+class ContentModelCategories extends JModelLegacy
 {
 	/**
 	 * Model context string.

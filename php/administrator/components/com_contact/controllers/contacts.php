@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: contacts.php 21477 2011-06-08 00:25:11Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	com_contact
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -46,7 +45,7 @@ class ContactControllerContacts extends JControllerAdmin
 	function featured()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
 		$user	= JFactory::getUser();

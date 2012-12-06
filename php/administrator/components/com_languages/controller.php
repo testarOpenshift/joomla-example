@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: controller.php 21343 2011-05-12 10:56:24Z infograf768 $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.controller');
 
 /**
  * Languages Controller
@@ -17,7 +13,7 @@ jimport('joomla.application.component.controller');
  * @subpackage	com_languages
  * @since		1.5
  */
-class LanguagesController extends JController
+class LanguagesController extends JControllerLegacy
 {
 	/**
 	 * @var		string	The default view.

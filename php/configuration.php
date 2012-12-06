@@ -17,7 +17,7 @@ class JConfig {
 	public $live_site = '';
 	public $secret = 'UnX75NMoFOpLpSn6';
 	public $gzip = '0';
-	public $error_reporting = '-1';
+	public $error_reporting = 'default';
 	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}';
 	public $ftp_host = '127.0.0.1';
 	public $ftp_port = '21';
@@ -52,6 +52,11 @@ class JConfig {
 	public $tmp_path = '';
 	public $lifetime = '15';
 	public $session_handler = 'database';
+	public $display_offline_message = '1';
+	public $offline_image = ''; 
+	public $captcha = '0';
+	public $MetaVersion = '0';
+	public $robots = '';
 
 	public function __construct() {
 		$this->host = getenv("OPENSHIFT_MYSQL_DB_HOST").":".getenv("OPENSHIFT_MYSQL_DB_PORT");

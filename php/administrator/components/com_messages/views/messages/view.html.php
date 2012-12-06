@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access.
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * View class for a list of messages.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_messages
  * @since		1.6
  */
-class MessagesViewMessages extends JView
+class MessagesViewMessages extends JViewLegacy
 {
 	protected $items;
 	protected $pagination;
@@ -66,8 +62,8 @@ class MessagesViewMessages extends JView
 
 		if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
 			JToolBarHelper::divider();
-			JToolBarHelper::deleteList('', 'messages.delete','JTOOLBAR_EMPTY_TRASH');
-		} else if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::deleteList('', 'messages.delete', 'JTOOLBAR_EMPTY_TRASH');
+		} elseif ($canDo->get('core.edit.state')) {
 			JToolBarHelper::divider();
 			JToolBarHelper::trash('messages.trash');
 		}

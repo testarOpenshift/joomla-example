@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: edit.php 21529 2011-06-11 22:17:15Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_menus
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,6 +12,7 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Load the tooltip behavior.
+JHtml::_('behavior.framework');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.modal');
@@ -57,7 +57,7 @@ JHtml::_('behavior.modal');
 				<?php echo $this->form->getInput('title'); ?></li>
 
 				<?php if ($this->item->type =='url'): ?>
-					<?php $this->form->setFieldAttribute('link','readonly','false');?>
+					<?php $this->form->setFieldAttribute('link', 'readonly', 'false');?>
 					<li><?php echo $this->form->getLabel('link'); ?>
 					<?php echo $this->form->getInput('link'); ?></li>
 				<?php endif; ?>
@@ -91,6 +91,9 @@ JHtml::_('behavior.modal');
 				<li><?php echo $this->form->getLabel('parent_id'); ?>
 				<?php echo $this->form->getInput('parent_id'); ?></li>
 
+				<li><?php echo $this->form->getLabel('menuordering'); ?>
+				<?php echo $this->form->getInput('menuordering'); ?></li>
+
 				<li><?php echo $this->form->getLabel('browserNav'); ?>
 				<?php echo $this->form->getInput('browserNav'); ?></li>
 
@@ -113,14 +116,14 @@ JHtml::_('behavior.modal');
 </div>
 
 <div class="width-40 fltrt">
-	<?php echo JHtml::_('sliders.start','menu-sliders-'.$this->item->id); ?>
+	<?php echo JHtml::_('sliders.start', 'menu-sliders-'.$this->item->id); ?>
 	<?php //Load  parameters.
 		echo $this->loadTemplate('options'); ?>
 
 		<div class="clr"></div>
 
 		<?php if (!empty($this->modules)) : ?>
-			<?php echo JHtml::_('sliders.panel',JText::_('COM_MENUS_ITEM_MODULE_ASSIGNMENT'), 'module-options'); ?>
+			<?php echo JHtml::_('sliders.panel', JText::_('COM_MENUS_ITEM_MODULE_ASSIGNMENT'), 'module-options'); ?>
 			<fieldset>
 				<?php echo $this->loadTemplate('modules'); ?>
 			</fieldset>
@@ -134,5 +137,3 @@ JHtml::_('behavior.modal');
 	<input type="hidden" id="fieldtype" name="fieldtype" value="" />
 </div>
 </form>
-
-

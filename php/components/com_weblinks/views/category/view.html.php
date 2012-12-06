@@ -1,16 +1,12 @@
 <?php
 /**
- * version $Id: view.html.php 21593 2011-06-21 02:45:51Z dextercowley $
  * @package		Joomla.Site
  * @subpackage	com_weblinks
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * HTML View class for the WebLinks component
@@ -19,7 +15,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_weblinks
  * @since		1.5
  */
-class WeblinksViewCategory extends JView
+class WeblinksViewCategory extends JViewLegacy
 {
 	protected $state;
 	protected $items;

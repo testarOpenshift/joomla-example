@@ -1,14 +1,10 @@
 <?php
 /**
- * @version		$Id: view.html.php 21705 2011-06-28 21:19:50Z dextercowley $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access.
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 /**
  * View class for a list of redirection links.
@@ -17,7 +13,7 @@ jimport('joomla.application.component.view');
  * @subpackage	com_redirect
  * @since		1.6
  */
-class RedirectViewLinks extends JView
+class RedirectViewLinks extends JViewLegacy
 {
 	protected $enabled;
 	protected $items;
@@ -74,14 +70,15 @@ class RedirectViewLinks extends JView
 				if ($state->get('filter.state') != 2) {
 					JToolBarHelper::archiveList('links.archive');
 				}
-				else if ($state->get('filter.state') == 2) {
+				elseif ($state->get('filter.state') == 2) {
 					JToolBarHelper::unarchiveList('links.publish', 'JTOOLBAR_UNARCHIVE');
 				}
 			}
 		}
 		if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
 			JToolBarHelper::deleteList('', 'links.delete', 'JTOOLBAR_EMPTY_TRASH');
-		} else if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::divider();
+		} elseif ($canDo->get('core.edit.state')) {
 			JToolBarHelper::trash('links.trash');
 			JToolBarHelper::divider();
 		}
