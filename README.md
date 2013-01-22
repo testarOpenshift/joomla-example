@@ -19,7 +19,7 @@ Create a php-5.3 application (you can call your application whatever you want)
 
 Add MySQL support to your application
 
-    rhc app cartridge add -a joomla -c mysql-5.1
+    rhc cartridge add -a joomla -c mysql-5.1
 
 Add this upstream Joomla repo
 
