@@ -13,7 +13,7 @@ class JConfig {
 	public $user = '';
 	public $password = '';
 	public $db = '';
-	public $dbprefix = 'tt7ki_';
+	public $dbprefix = 'sfj8s_';
 	public $live_site = '';
 	public $secret = 'UnX75NMoFOpLpSn6';
 	public $gzip = '0';
