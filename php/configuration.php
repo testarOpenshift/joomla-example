@@ -63,7 +63,7 @@ class JConfig {
 		$this->user = getenv("OPENSHIFT_MYSQL_DB_USERNAME");
 		$this->password = getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
 		$this->db = getenv("OPENSHIFT_APP_NAME");
-		$this->log_path = getenv("OPENSHIFT_PHP_LOG_DIR");
+		$this->log_path = getenv("OPENSHIFT_LOG_DIR");
 		$this->tmp_path = getenv("OPENSHIFT_TMP_DIR");
 	}
 }
