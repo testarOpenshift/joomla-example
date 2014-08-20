@@ -17,7 +17,7 @@ then
 fi
 
 # Confirm database exists, if not create it
-if ! /usr/bin/mysql -u "$OPENSHIFT_MYSQL_DB_USERNAME" --password="$OPENSHIFT_MYSQL_DB_PASSWORD" -h "$OPENSHIFT_MYSQL_DB_HOST" -e "select * from sfj8s_assets;" "$OPENSHIFT_APP_NAME" > /dev/null 2>&1
+if ! /usr/bin/mysql -u "$OPENSHIFT_MYSQL_DB_USERNAME" --password="$OPENSHIFT_MYSQL_DB_PASSWORD" -h "$OPENSHIFT_MYSQL_DB_HOST" -e "select * from jml_assets;" "$OPENSHIFT_APP_NAME" > /dev/null 2>&1
 then
     echo
     echo "Database schema not found, importing 'joomla.sql' schema."
