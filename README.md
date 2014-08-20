@@ -13,22 +13,11 @@ Running on OpenShift
 
 Create an account at https://www.openshift.com
 
-Create a php application with mysql (you can call your application whatever you want)
+Create a php application with mysql (you can call your application whatever you want) from this git repo:
 
-    rhc app create joomla php-5.4 mysql-5.5
+    rhc app-create joomla php-5.4 mysql-5.5 --from-code=https://github.com/openshift/joomla-example.gi
 
-Add this upstream Joomla repo
-
-    cd joomla
-    git remote add upstream -m master git://github.com/openshift/joomla-example.git
-    git pull -s recursive -X theirs upstream master
-    # note that the git pull above can be used later to pull updates to Joomla
-    
-Then push the repo upstream
-
-    git push
-
-That's it, you can now checkout your application at (default admin account is admin/4dm1n):
+That's it, you can now checkout your application at (default admin account is admin/admin):
 
     http://joomla-$yournamespace.rhcloud.com
 
